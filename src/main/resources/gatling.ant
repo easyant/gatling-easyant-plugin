@@ -1,0 +1,41 @@
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<project name="org.apache.easyant.plugins;gatling" xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:ea="antlib:org.apache.easyant">
+
+	<ea:core-version requiredrevision="[0.9,+]" />
+
+	<target name="gatling:init">
+		<ea:parameter property="target.reports" default="${target}/reports" description="base directory for reports" />
+
+		<ea:parameter property="gatling.noReports" description="Runs simulation but does not generate reports." default="false" />
+		<ea:parameter property="gatling.reportsOnly" description="Generates the reports for the simulation in this folder" />
+		<ea:parameter property="gatling.configDir" description="Uses this file as the configuration file" default="${basedir}/src/test/resources" />
+		<ea:parameter property="gatling.simulationsFolder" description="Uses this folder to discover simulations that could be run" default="${basedir}/src/test/scala" />
+		<ea:parameter property="gatling.simulationsFolder.includes" default="**/*" description="Sets the list of include patterns to use in directory scan for simulations. Relative to simulationsFolder" />
+		<ea:parameter property="gatling.simulationsFolder.excludes" default="" description="Sets the list of exclude patterns to use in directory scan for simulations. Relative to simulationsFolder" />
+		<ea:parameter property="gatling.simulationClass" description=" A name of a Simulation class to run. This takes precedence over the includes / excludes parameters." />
+		<ea:parameter property="gatling.dataFolder" description="Uses this folder as the folder where feeders are stored" default="${basedir}/src/test/resources/data" />
+		<ea:parameter property="gatling.requestBodiesFolder" description="Uses this folder as the folder where request bodies are stored" default="${basedir}/src/test/resources/request-bodies" />
+		<ea:parameter property="gatling.resultsFolder" description="Uses this folder as the folder where results are stored" default="${target.reports}/gatling" />
+		<ea:parameter property="gatling.jvmArgs" description="Extra JVM arguments to pass when running Gatling." default="-server -XX:+UseThreadPriorities -XX:ThreadPriorityPolicy=42 -Xms512M -Xmx512M -Xmn100M -Xss2M -XX:+HeapDumpOnOutOfMemoryError -XX:+AggressiveOpts -XX:+OptimizeStringConcat -XX:+UseFastAccessorMethods -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+CMSClassUnloadingEnabled -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:SurvivorRatio=8 -XX:MaxTenuringThreshold=1" />
+		<ea:parameter property="gatling.fork" description="Forks the execution of Gatling plugin into a separate JVM" default="true" />
+        <ea:parameter property="gatling.failOnError" default="true" description="Will cause the project build to look successful, rather than fail, even if there are Gatling test failures. This can be useful on a continuous integration server, if your only option to be able to collect output files, is if the project builds successfully."  />
+		<ea:parameter property="gatling.outputDirectoryBaseName" description="Force the name of the directory generated for the results of the run" />
+		<ea:parameter property="gatling.propagateSystemProperties" default="true" description="Propagates System properties in fork mode to forked process"/> 
+	</target>
+
+</project>
