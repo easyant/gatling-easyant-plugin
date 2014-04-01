@@ -14,9 +14,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<project name="org.apache.easyant.plugins;gatling" xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:ea="antlib:org.apache.easyant">
+<project name="org.apache.easyant.plugins;gatling" xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:ea="antlib:org.apache.easyant" xmlns:if="ant:if">
 
-	<ea:core-version requiredrevision="[0.9,+]" />
+	<ea:core-version requiredrevision="[0.10,+]" />
 
 	<target name="gatling:init">
 		<ea:parameter property="target.reports" default="${target}/reports" description="base directory for reports" />
@@ -33,9 +33,24 @@
 		<ea:parameter property="gatling.resultsFolder" description="Uses this folder as the folder where results are stored" default="${target.reports}/gatling" />
 		<ea:parameter property="gatling.jvmArgs" description="Extra JVM arguments to pass when running Gatling." default="-server -XX:+UseThreadPriorities -XX:ThreadPriorityPolicy=42 -Xms512M -Xmx512M -Xmn100M -Xss2M -XX:+HeapDumpOnOutOfMemoryError -XX:+AggressiveOpts -XX:+OptimizeStringConcat -XX:+UseFastAccessorMethods -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+CMSClassUnloadingEnabled -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:SurvivorRatio=8 -XX:MaxTenuringThreshold=1" />
 		<ea:parameter property="gatling.fork" description="Forks the execution of Gatling plugin into a separate JVM" default="true" />
-        <ea:parameter property="gatling.failOnError" default="true" description="Will cause the project build to look successful, rather than fail, even if there are Gatling test failures. This can be useful on a continuous integration server, if your only option to be able to collect output files, is if the project builds successfully."  />
+		<ea:parameter property="gatling.failOnError" default="true" description="Will cause the project build to look successful, rather than fail, even if there are Gatling test failures. This can be useful on a continuous integration server, if your only option to be able to collect output files, is if the project builds successfully." />
 		<ea:parameter property="gatling.outputDirectoryBaseName" description="Force the name of the directory generated for the results of the run" />
-		<ea:parameter property="gatling.propagateSystemProperties" default="true" description="Propagates System properties in fork mode to forked process"/> 
+		<ea:parameter property="gatling.newEnvironment" default="false" description="Do not propagate old environment when new environment variables are specified (ignored if fork is disable" />
+	</target>
+
+	<target name="gatling:execute" description="run gatling tests" depends="gatling:init">
+		<java classname="io.gatling.app.Gatling" failonerror="${gatling.failOnError}" fork="${gatling.fork}" newenvironment="${gatling.newEnvironment}" classpathref="org.apache.easyant.plugins#gatling.classpath">
+			<arg line="--reports-only ${gatling.reportsOnly}" if:set="gatling.reportsOnly" />
+			<arg line="--no-reports" if:true="gatling.noReports" />
+			<arg line="--simulations-folder ${gatling.simulationsFolder}" />
+			<arg line="--simulations ${gatling.simulationClass}" if:set="gatling.simulationClass" />
+			<arg line="--data-folder ${gatling.dataFolder}" />
+			<arg line="--request-bodies-folder ${gatling.requestBodiesFolder}" />
+			<arg line="--results-folder ${gatling.resultsFolder}" />
+			<arg line="--output-name ${gatling.outputDirectoryBaseName}" if:set="gatling.outputDirectoryBaseName" />
+
+			<jvmarg line="${gatling.jvmArgs}" />
+		</java>
 	</target>
 
 </project>

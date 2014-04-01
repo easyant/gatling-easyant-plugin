@@ -24,6 +24,7 @@
         <artifact name="gatling" type="ant" />
     </publications>
     <dependencies>
-       <!-- <dependency org="io.gatling" name="gatling-app" rev="" conf="default->default" /> -->
+       <dependency org="io.gatling" name="gatling-app" rev="2.0.0-M3a" conf="default->default" />
+       <dependency org="com.typesafe" name="config" rev="1.2.0" conf="default->default"/>
     </dependencies>
 </ivy-module>
