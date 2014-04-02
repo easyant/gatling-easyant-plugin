@@ -8,6 +8,9 @@
 <ivy-module version="2.0" xmlns:ea="http://www.easyant.org">
     <info organisation="org.apache.easyant.plugins" module="gatling" status="integration"
         revision="0.1">
+        <description>
+            Provides gatling (stress tool) integration. The following repository is required to get gatling dependencies: http://repository.excilys.com/content/groups/public
+        </description>
         <ea:build organisation="org.apache.easyant.buildtypes" module="build-std-ant-plugin"
             revision="0.9" />
         <ea:plugin module="easyant-plugin-documentation" revision="0.10" />
@@ -24,7 +27,7 @@
         <artifact name="gatling" type="ant" />
     </publications>
     <dependencies>
-       <dependency org="io.gatling" name="gatling-app" rev="2.0.0-M3a" conf="default->default" />
-       <dependency org="com.typesafe" name="config" rev="1.2.0" conf="default->default"/>
+        <dependency org="io.gatling" name="gatling-app" rev="2.0.0-M3a" conf="default->default" />
+        <dependency org="com.typesafe" name="config" rev="1.2.0" conf="default->default" />
     </dependencies>
 </ivy-module>

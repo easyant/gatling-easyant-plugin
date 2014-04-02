@@ -2,6 +2,8 @@
 
 # Description
 
+Provides gatling (stress tool) integration. The following repository is required to get gatling dependencies: http://repository.excilys.com/content/groups/public
+	
 # Example
 
 ```xml
