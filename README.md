@@ -18,6 +18,7 @@ Organisation attribute is optional. If not specified default one will be used.
 |target name|description|extension point|depends|
 |-----------|-----------|---------------|-------|
 |gatling:init||||
+|gatling:execute|run gatling tests||gatling:init|
 
 ## Module parameters
 
@@ -28,7 +29,6 @@ Organisation attribute is optional. If not specified default one will be used.
 |gatling.outputDirectoryBaseName|Force the name of the directory generated for the results of the run|false||
 |gatling.reportsOnly|Generates the reports for the simulation in this folder|false||
 |gatling.requestBodiesFolder|Uses this folder as the folder where request bodies are stored|false|${basedir}/src/test/resources/request-bodies|
-|gatling.propagateSystemProperties|Propagates System properties in fork mode to forked process|false|true|
 |gatling.simulationClass| A name of a Simulation class to run. This takes precedence over the includes / excludes parameters.|false||
 |gatling.fork|Forks the execution of Gatling plugin into a separate JVM|false|true|
 |gatling.simulationsFolder.includes|Sets the list of include patterns to use in directory scan for simulations. Relative to simulationsFolder|false|**/*|
@@ -36,6 +36,7 @@ Organisation attribute is optional. If not specified default one will be used.
 |gatling.simulationsFolder.excludes|Sets the list of exclude patterns to use in directory scan for simulations. Relative to simulationsFolder|false||
 |gatling.resultsFolder|Uses this folder as the folder where results are stored|false|${target.reports}/gatling|
 |gatling.configDir|Uses this file as the configuration file|false|${basedir}/src/test/resources|
+|gatling.newEnvironment|Do not propagate old environment when new environment variables are specified (ignored if fork is disable|false|false|
 |target.reports|base directory for reports|false|${target}/reports|
 |gatling.simulationsFolder|Uses this folder to discover simulations that could be run|false|${basedir}/src/test/scala|
 |gatling.jvmArgs|Extra JVM arguments to pass when running Gatling.|false|-server -XX:+UseThreadPriorities -XX:ThreadPriorityPolicy=42 -Xms512M -Xmx512M -Xmn100M -Xss2M -XX:+HeapDumpOnOutOfMemoryError -XX:+AggressiveOpts -XX:+OptimizeStringConcat -XX:+UseFastAccessorMethods -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+CMSClassUnloadingEnabled -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:SurvivorRatio=8 -XX:MaxTenuringThreshold=1|
@@ -52,4 +53,9 @@ Organisation attribute is optional. If not specified default one will be used.
 
 ## Dependencies Overview
 
-No dependency
+|Organisation|Module|Revision|
+|------------|------|--------|
+|com.typesafe|config|1.2.0|
+|com.typesafe|config|1.0.1|
+|io.gatling|gatling-app|2.0.0-M3a|
+
